@@ -15,7 +15,7 @@ mongoose.connect(process.env.MONGO_URL).catch((err) => {
     throw new Error(err);
 });
 
-if (process.env.NODE_ENV !== 'prod') {
+if (process.env.NODE_ENV !== 'production') {
     app.use(logger('dev'));
 }
 app.use(helmet());

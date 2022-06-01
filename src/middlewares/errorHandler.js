@@ -20,7 +20,7 @@ exports.errorConverter = (err, req, res, next) => {
 exports.errorHandler = (err, req, res, next) => {
     let { statusCode, message } = err;
 
-    if (process.env.NODE_ENV === 'prod') {
+    if (process.env.NODE_ENV === 'production') {
         statusCode = httpStatus.INTERNAL_SERVER_ERROR;
         message = httpStatus[httpStatus.INTERNAL_SERVER_ERROR];
     }
@@ -30,10 +30,10 @@ exports.errorHandler = (err, req, res, next) => {
     const response = {
         code: statusCode,
         message,
-        ...(process.env.NODE_ENV === 'dev' && { stack: err.stack }),
+        ...(process.env.NODE_ENV === 'development' && { stack: err.stack }),
     };
 
-    if (process.env.NODE_ENV === 'dev') {
+    if (process.env.NODE_ENV === 'development') {
         debug(err);
     }
 
