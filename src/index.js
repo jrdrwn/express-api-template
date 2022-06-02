@@ -1,8 +1,9 @@
-const app = require('./app');
 const debug = require('debug')('server');
 const http = require('http');
 const { createTerminus } = require('@godaddy/terminus');
 const mongoose = require('mongoose');
+
+const app = require('./app');
 
 mongoose.connect(process.env.MONGO_URL).catch((err) => {
     throw new Error(err);
@@ -11,7 +12,7 @@ mongoose.connect(process.env.MONGO_URL).catch((err) => {
 function normalizePort(val) {
     const port = parseInt(val, 10);
 
-    if (isNaN(port)) {
+    if (Number.isNaN(port)) {
         return val;
     }
 
@@ -46,16 +47,16 @@ server.on('error', (error) => {
         throw error;
     }
 
-    const bind = typeof port === 'string' ? 'Pipe ' + port : 'Port ' + port;
+    const bind = typeof port === 'string' ? `Pipe ${port}` : `Port ${port}`;
 
     // handle specific listen errors with friendly messages
     switch (error.code) {
         case 'EACCES':
-            debug(bind + ' requires elevated privileges');
+            debug(`${bind} requires elevated privileges`);
             process.exit(1);
             break;
         case 'EADDRINUSE':
-            debug(bind + ' is already in use');
+            debug(`${bind} is already in use`);
             process.exit(1);
             break;
         default:

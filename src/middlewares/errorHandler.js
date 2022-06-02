@@ -1,13 +1,14 @@
-const ApiError = require('../utils/ApiError');
 const debug = require('debug')('server:error-handler');
 const httpStatus = require('http-status');
 const mongoose = require('mongoose');
 
-exports.nextError = (req, res, next) => {
+const ApiError = require('../utils/ApiError');
+
+exports.nextError = (_req, _res, next) => {
     next(new ApiError(httpStatus.NOT_FOUND, 'Not found'));
 };
 
-exports.errorConverter = (err, req, res, next) => {
+exports.errorConverter = (err, _req, _res, next) => {
     let error = err;
 
     if (!(error instanceof ApiError)) {
@@ -21,7 +22,7 @@ exports.errorConverter = (err, req, res, next) => {
     next(error);
 };
 
-exports.errorHandler = (err, req, res, next) => {
+exports.errorHandler = (err, _req, res, _next) => {
     let { statusCode, message } = err;
 
     if (process.env.NODE_ENV === 'production') {
