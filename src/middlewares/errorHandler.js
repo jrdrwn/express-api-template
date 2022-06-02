@@ -3,6 +3,10 @@ const debug = require('debug')('server:error-handler');
 const httpStatus = require('http-status');
 const mongoose = require('mongoose');
 
+exports.nextError = (req, res, next) => {
+    next(new ApiError(httpStatus.NOT_FOUND, 'Not found'));
+};
+
 exports.errorConverter = (err, req, res, next) => {
     let error = err;
 
