@@ -2,7 +2,7 @@ const compression = require('compression');
 const cors = require('cors');
 const express = require('express');
 const helmet = require('helmet');
-const logger = require('morgan');
+const morgan = require('./config/morgan');
 const mongoose = require('mongoose');
 const httpStatus = require('http-status');
 
@@ -17,9 +17,8 @@ mongoose.connect(process.env.MONGO_URL).catch((err) => {
     throw new Error(err);
 });
 
-if (process.env.NODE_ENV !== 'production') {
-    app.use(logger('dev'));
-}
+app.use(morgan.successHandler);
+app.use(morgan.errorHandler);
 app.use(helmet());
 app.use(compression());
 app.use(cors());
