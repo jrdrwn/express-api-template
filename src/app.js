@@ -4,7 +4,9 @@ const express = require('express');
 const helmet = require('helmet');
 const logger = require('morgan');
 const mongoose = require('mongoose');
+const httpStatus = require('http-status');
 
+const ApiError = require('./utils/ApiError');
 const { errorConverter, errorHandler } = require('./middlewares/errorHandler');
 
 require('dotenv').config();
@@ -24,6 +26,9 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+app.use((req, res, next) => {
+    next(new ApiError(httpStatus.NOT_FOUND, 'Not found'));
+});
 app.use(errorConverter);
 app.use(errorHandler);
 
