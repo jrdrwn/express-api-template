@@ -24,7 +24,8 @@
         "helmet": "^5.1.0",
         "http-status": "^1.5.2",
         "mongoose": "^6.3.4",
-        "morgan": "~1.9.1"
+        "morgan": "~1.9.1",
+        "pm2": "^5.2.0"
     },
     "devDependencies": {
         "eslint": "^7.32.0 || ^8.2.0",
@@ -40,6 +41,6 @@
         "format:check": "prettier . --check",
         "lint": "eslint .",
         "link:fix": "eslint . --fix",
-        "start": "NODE_ENV=production node ./src"
+        "start": "pm2 start ecosystem.config.json --no-daemon"
     }
 }
