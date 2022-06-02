@@ -40,7 +40,7 @@
         "format": "prettier . --write",
         "format:check": "prettier . --check",
         "lint": "eslint .",
-        "link:fix": "eslint . --fix",
+        "lint:fix": "eslint . --fix",
         "start": "pm2 start ecosystem.config.json --no-daemon"
     }
 }
