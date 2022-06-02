@@ -27,13 +27,19 @@
         "morgan": "~1.9.1"
     },
     "devDependencies": {
+        "eslint": "^7.32.0 || ^8.2.0",
+        "eslint-config-airbnb-base": "^15.0.0",
+        "eslint-config-prettier": "^8.5.0",
+        "eslint-plugin-import": "^2.25.2",
         "nodemon": "^2.0.16",
         "prettier": "^2.6.2"
     },
     "scripts": {
         "dev": "NODE_ENV=development DEBUG=server,server:* nodemon ./src",
-        "prettier": "prettier . --check",
-        "prettier:fix": "prettier . --write",
+        "format": "prettier . --write",
+        "format:check": "prettier . --check",
+        "lint": "eslint .",
+        "link:fix": "eslint . --fix",
         "start": "NODE_ENV=production node ./src"
     }
 }
