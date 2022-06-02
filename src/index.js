@@ -1,6 +1,8 @@
 const app = require('./app');
 const debug = require('debug')('server');
 const http = require('http');
+const { createTerminus } = require('@godaddy/terminus');
+const mongoose = require('mongoose');
 
 function normalizePort(val) {
     const port = parseInt(val, 10);
@@ -24,6 +26,17 @@ app.set('hostname', hostname);
 
 const server = http.createServer(app);
 
+const terminus_options = {
+    signals: ['SIGINT', 'SIGBREAK', 'SIGHUP', 'SIGUSR2'],
+    onSignal: () => {
+        debug('server is starting cleanup');
+        return Promise.all([mongoose.disconnect(), Promise.resolve(server.close())]);
+    },
+    onShutdown: () => {
+        debug('cleanup finished, server is shutting down');
+    },
+};
+
 server.on('error', (error) => {
     if (error.syscall !== 'listen') {
         throw error;
@@ -34,17 +47,19 @@ server.on('error', (error) => {
     // handle specific listen errors with friendly messages
     switch (error.code) {
         case 'EACCES':
-            console.error(bind + ' requires elevated privileges');
+            debug(bind + ' requires elevated privileges');
             process.exit(1);
             break;
         case 'EADDRINUSE':
-            console.error(bind + ' is already in use');
+            debug(bind + ' is already in use');
             process.exit(1);
             break;
         default:
             throw error;
     }
 });
+
+createTerminus(server, terminus_options);
 
 server.listen(port, hostname, () => {
     const addr = server.address();
