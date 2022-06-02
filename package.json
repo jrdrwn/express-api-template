@@ -2,18 +2,31 @@
     "name": "express-api-template",
     "version": "0.0.0",
     "description": "A starter template NodeJS API ",
-    "main": "./src",
-    "license": "MIT",
-    "private": true,
-    "author": {
-        "email": "jordirwn@gmail.com",
-        "name": "Jordi Irawan"
-    },
     "keywords": [
         "nodejs",
         "rest-api",
         "express"
     ],
+    "homepage": "https://github.com/jrdrwn/express-api-template#readme",
+    "bugs": {
+        "url": "https://github.com/jrdrwn/express-api-template/issues",
+        "email": "jordirwn@gmail.com"
+    },
+    "author": "Jordi Irawan <jordirwn@gmail.com> (https://jrdrwn.github.io/)",
+    "license": "MIT",
+    "main": "./src/index.js",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/jrdrwn/express-api-template.git"
+    },
+    "scripts": {
+        "dev": "NODE_ENV=development DEBUG=server,server:* nodemon ./src",
+        "format": "prettier . --write",
+        "format:check": "prettier . --check",
+        "lint": "eslint .",
+        "lint:fix": "eslint . --fix",
+        "start": "pm2 start ecosystem.config.json"
+    },
     "dependencies": {
         "@godaddy/terminus": "^4.10.2",
         "compression": "^1.7.4",
@@ -35,12 +48,8 @@
         "nodemon": "^2.0.16",
         "prettier": "^2.6.2"
     },
-    "scripts": {
-        "dev": "NODE_ENV=development DEBUG=server,server:* nodemon ./src",
-        "format": "prettier . --write",
-        "format:check": "prettier . --check",
-        "lint": "eslint .",
-        "lint:fix": "eslint . --fix",
-        "start": "pm2 start ecosystem.config.json"
-    }
+    "engines": {
+        "node": ">=16.13.0"
+    },
+    "private": true
 }
