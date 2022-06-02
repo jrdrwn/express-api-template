@@ -4,6 +4,10 @@ const http = require('http');
 const { createTerminus } = require('@godaddy/terminus');
 const mongoose = require('mongoose');
 
+mongoose.connect(process.env.MONGO_URL).catch((err) => {
+    throw new Error(err);
+});
+
 function normalizePort(val) {
     const port = parseInt(val, 10);
 
