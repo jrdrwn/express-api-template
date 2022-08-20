@@ -20,31 +20,29 @@
     "url": "https://github.com/jrdrwn/express-api-template.git"
   },
   "scripts": {
-    "dev": "NODE_ENV=development DEBUG=server,server:* nodemon ./src",
+    "dev": "dotenv -c development -v NODE_ENV=development nodemon",
     "format": "prettier . --write",
     "format:check": "prettier . --check",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
-    "start": "pm2-runtime start ecosystem.config.json"
+    "start": "dotenv -c production -v NODE_ENV=production pm2-runtime start ecosystem.config.js --env production"
   },
   "dependencies": {
     "@godaddy/terminus": "^4.10.2",
     "compression": "^1.7.4",
     "cors": "^2.8.5",
     "debug": "~2.6.9",
-    "dotenv": "^16.0.1",
+    "dotenv-cli": "^6.0.0",
     "express": "~4.16.1",
+    "express-pino-logger": "^7.0.0",
     "helmet": "^5.1.0",
     "http-status": "^1.5.2",
+    "joi": "^17.6.0",
     "mongoose": "^6.3.4",
     "morgan": "~1.9.1",
+    "pino": "^8.2.0",
+    "pino-pretty": "^8.1.0",
     "pm2": "^5.2.0"
   },
   "devDependencies": {
-    "eslint": "^7.32.0 || ^8.2.0",
-    "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-config-prettier": "^8.5.0",
-    "eslint-plugin-import": "^2.25.2",
     "nodemon": "^2.0.16",
     "prettier": "^2.6.2"
   },

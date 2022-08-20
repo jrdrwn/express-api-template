@@ -1,6 +1,6 @@
-const debug = require('debug')('server:error-handler');
 const httpStatus = require('http-status');
 const mongoose = require('mongoose');
+const config = require('../config/config');
 
 const ApiError = require('../utils/ApiError');
 
@@ -22,10 +22,10 @@ exports.errorConverter = (err, _req, _res, next) => {
   next(error);
 };
 
-exports.errorHandler = (err, _req, res, _next) => {
+exports.errorHandler = (err, req, res, _next) => {
   let { statusCode, message } = err;
 
-  if (process.env.NODE_ENV === 'production') {
+  if (config.env === 'production') {
     statusCode = httpStatus.INTERNAL_SERVER_ERROR;
     message = httpStatus[httpStatus.INTERNAL_SERVER_ERROR];
   }
@@ -35,11 +35,11 @@ exports.errorHandler = (err, _req, res, _next) => {
   const response = {
     code: statusCode,
     message,
-    ...(process.env.NODE_ENV === 'development' && { stack: err.stack }),
+    ...(config.env === 'development' && { stack: err.stack }),
   };
 
-  if (process.env.NODE_ENV === 'development') {
-    debug(err);
+  if (config.env === 'development') {
+    req.log.error(err);
   }
 
   res.status(statusCode).send(response);

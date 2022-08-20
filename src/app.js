@@ -2,16 +2,14 @@ const compression = require('compression');
 const cors = require('cors');
 const express = require('express');
 const helmet = require('helmet');
-const morgan = require('./config/morgan');
+const logger = require('./config/logger');
+const pino = require('express-pino-logger')({ logger });
 
 const { nextError, errorConverter, errorHandler } = require('./middlewares/errorHandler');
 
-require('dotenv').config();
-
 const app = express();
 
-app.use(morgan.successHandler);
-app.use(morgan.errorHandler);
+app.use(pino);
 app.use(helmet());
 app.use(compression());
 app.use(cors());
